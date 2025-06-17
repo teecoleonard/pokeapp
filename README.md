@@ -287,17 +287,17 @@ src/app/
 ├── 📁 components/          # Componentes reutilizáveis
 ├── 📁 pages/              # Páginas da aplicação
 │   ├── 🏠 home/           # Pokédex principal
-│   ├── 🔍 search/         # Sistema de busca
+│   ├── 🔍 search/         # Sistema de busca (ilustrativo)
 │   ├── ❤️ favorites/      # Favoritos
 │   ├── 🎨 types/          # Tipos Pokémon
 │   ├── 📊 stats/          # Estatísticas
 │   ├── 🔍 pokemon-details/ # Detalhes
 │   ├── ⚙️ settings/       # Configurações (ilustrativo)
 │   ├── ℹ️ about/          # Sobre a aplicação
-│   └── 🔗 webhook-admin/   # Admin WebHooks (NOVO)
+│   └── 🔗 webhook-admin/   # Admin WebHooks
 ├── 📁 services/           # Serviços e lógica
 │   ├── pokemon.service.ts  # API e dados
-│   └── webhook.service.ts  # WebHooks (NOVO)
+│   └── webhook.service.ts  # WebHooks
 ├── 📁 models/             # Interfaces TypeScript
 ├── 📁 environments/       # Configurações de ambiente
 └── 📁 assets/            # Recursos estáticos
