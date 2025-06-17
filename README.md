@@ -65,7 +65,7 @@ Demonstrar competências em desenvolvimento de aplicações mobile modernas, inc
 |---|---|---|
 | **Documentação Técnica** | README detalhado + comentários no código | ✅ **Completo** |
 | **WebHooks** | Sistema completo de monitoramento em tempo real | ✅ **Completo** |
-| **Mídia no Repositório** | Screenshots e documentação visual | 🔄 **Em andamento** |
+| **Mídia no Repositório** | Screenshots e documentação visual | ✅ **Completo** |
 | **Testes Unitários** | 70+ testes cobrindo partes importantes | ✅ **Completo** |
 
 ### 🔄 **Funcionalidades Extras Adicionadas**
@@ -106,37 +106,40 @@ Demonstrar competências em desenvolvimento de aplicações mobile modernas, inc
 
 > **📝 Nota**: Screenshots serão adicionados em breve
 
-### 🏠 **Tela Principal**
-<!-- Adicionar screenshot da tela principal aqui -->
-*Screenshot da Pokédx principal*
-
-### 🔍 **Sistema de Busca**
-<!-- Adicionar screenshot da busca aqui -->
-*Screenshot do sistema de busca avançado*
-
-### ❤️ **Favoritos**
-<!-- Adicionar screenshot dos favoritos aqui -->
-*Screenshot da página de favoritos*
-
-### 🎨 **Tipos Pokémon**
-<!-- Adicionar screenshot dos tipos aqui -->
-*Screenshot da enciclopédia de tipos*
-
-### 📊 **Estatísticas**
-<!-- Adicionar screenshot das estatísticas aqui -->
-*Screenshot da central de estatísticas*
-
-### 🔍 **Detalhes do Pokémon**
-<!-- Adicionar screenshot dos detalhes aqui -->
-*Screenshot da página de detalhes completa*
-
-### 🧪 **Testes Automatizados**
-<!-- Adicionar screenshot dos testes aqui -->
-*Screenshot dos testes unitários rodando*
-
-### 🔗 **WebHook Admin**
-<!-- Adicionar screenshot do webhook admin aqui -->
-*Screenshot do painel de administração de webhooks*
+  ### 🏠 **Tela Principal**
+  <img src="https://github.com/user-attachments/assets/d3dd3e64-fdfe-407f-b002-21394062adeb" alt="Tela Principal" width="600">
+  
+  *Screenshot da Pokédx principal*
+  
+  ### ❤️ **Favoritos**
+  <img src="https://github.com/user-attachments/assets/c2216706-5d6f-498e-b798-61186fb37b88" alt="Favoritos" width="600">
+  
+  *Screenshot da página de favoritos*
+  
+  ### 🎨 **Tipos Pokémon**
+  <img src="https://github.com/user-attachments/assets/65bb7c90-4672-40eb-afb3-cc6e90752041" alt="Tipos Pokémon" width="600">
+  
+  *Screenshot da enciclopédia de tipos*
+  
+  ### 📊 **Estatísticas**
+  <img src="https://github.com/user-attachments/assets/0c9f75bc-52ab-447c-8040-b9f92ca330c5" alt="Estatísticas" width="600">
+  
+  *Screenshot da central de estatísticas*
+  
+  ### 🔍 **Detalhes do Pokémon**
+  <img src="https://github.com/user-attachments/assets/a668c170-a6c9-4775-93e6-2c869a15ea91" alt="Detalhes do Pokémon" width="600">
+  
+  *Screenshot da página de detalhes completa*
+  
+  ### 🧪 **Testes Automatizados**
+  <img src="https://github.com/user-attachments/assets/5650fea9-fd0b-43c7-b37f-abfe6e6af7ed" alt="Testes Automatizados" width="600">
+  
+  *Screenshot dos testes unitários rodando*
+  
+  ### 🔗 **WebHook Admin**
+  <img src="https://github.com/user-attachments/assets/68d9c377-8274-49a8-a473-46873f447301" alt="WebHook Admin" width="600">
+  
+  *Screenshot do painel de administração de webhooks*
 
 ---
 
