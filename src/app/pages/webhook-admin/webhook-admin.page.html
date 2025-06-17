@@ -1,0 +1,303 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>🔗 Administração de WebHooks</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportConfiguration()" fill="clear">
+        <ion-icon name="download" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Controle Principal -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🔧 Controle Principal</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>
+          <h2>WebHook Service</h2>
+          <p>Ativar/desativar sistema de webhooks</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="isWebHookEnabled" (ionChange)="toggleWebHookService()"></ion-toggle>
+      </ion-item>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        (click)="triggerTestEvents()"
+        [disabled]="!isWebHookEnabled">
+        <ion-icon name="play" slot="start"></ion-icon>
+        Disparar Eventos de Teste
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estatísticas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📊 Estatísticas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ stats.events_sent || 0 }}</h3>
+              <p>Eventos Enviados</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ stats.events_success || 0 }}</h3>
+              <p>Sucessos</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ stats.events_failed || 0 }}</h3>
+              <p>Falhas</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ stats.endpoints_active || 0 }}</h3>
+              <p>Endpoints Ativos</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Endpoints Configurados -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🌐 Endpoints Configurados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="endpoints.length > 0">
+        <ion-item *ngFor="let endpoint of endpoints">
+          <div class="endpoint-info">
+            <h3>{{ endpoint.name }}</h3>
+            <p>{{ endpoint.url }}</p>
+            <ion-chip 
+              *ngFor="let event of endpoint.events" 
+              color="medium" 
+              class="event-chip">
+              {{ event }}
+            </ion-chip>
+          </div>
+          
+          <div slot="end" class="endpoint-actions">
+            <ion-button 
+              fill="clear" 
+              size="small"
+              [color]="endpoint.enabled ? 'success' : 'medium'"
+              (click)="toggleEndpoint(endpoint)">
+              <ion-icon [name]="endpoint.enabled ? 'power' : 'power-outline'"></ion-icon>
+            </ion-button>
+            
+            <ion-button 
+              fill="clear" 
+              size="small"
+              color="primary"
+              (click)="testEndpoint(endpoint)">
+              <ion-icon name="play"></ion-icon>
+            </ion-button>
+            
+            <ion-button 
+              fill="clear" 
+              size="small"
+              color="danger"
+              (click)="removeEndpoint(endpoint.id)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-list>
+      
+      <div *ngIf="endpoints.length === 0" class="empty-state">
+        <ion-icon name="globe-outline" size="large" color="medium"></ion-icon>
+        <p>Nenhum endpoint configurado</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Adicionar Novo Endpoint -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>➕ Novo Endpoint</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input 
+          [(ngModel)]="newEndpoint.name" 
+          placeholder="Ex: Analytics Tracker">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">URL</ion-label>
+        <ion-input 
+          [(ngModel)]="newEndpoint.url" 
+          placeholder="https://webhook.site/your-unique-id">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Eventos</ion-label>
+      </ion-item>
+      
+      <div class="events-selection">
+        <ion-chip 
+          *ngFor="let event of availableEvents" 
+          [color]="isEventSelected(event) ? 'primary' : 'medium'"
+          (click)="isEventSelected(event) ? removeEventFromNewEndpoint(event) : addEventToNewEndpoint(event)">
+          {{ event }}
+          <ion-icon 
+            [name]="isEventSelected(event) ? 'checkmark' : 'add'" 
+            slot="end">
+          </ion-icon>
+        </ion-chip>
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Tentativas</ion-label>
+              <ion-input 
+                type="number" 
+                [(ngModel)]="newEndpoint.retry_attempts" 
+                min="1" 
+                max="10">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Timeout (ms)</ion-label>
+              <ion-input 
+                type="number" 
+                [(ngModel)]="newEndpoint.timeout_ms" 
+                min="1000" 
+                max="30000">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Headers Customizados -->
+      <ion-item>
+        <ion-label position="stacked">Headers Customizados</ion-label>
+        <ion-button 
+          fill="clear" 
+          size="small" 
+          slot="end"
+          (click)="addHeader()">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div *ngFor="let key of getHeaderKeys(); trackBy: trackHeaderByKey" class="header-item">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="5">
+              <ion-input 
+                [value]="key"
+                placeholder="Header Name"
+                (ionInput)="updateHeaderKey(key, $event.detail.value!)">
+              </ion-input>
+            </ion-col>
+            <ion-col size="5">
+              <ion-input 
+                [value]="newEndpoint.headers![key]"
+                placeholder="Header Value"
+                (ionInput)="updateHeaderValue(key, $event.detail.value!)">
+              </ion-input>
+            </ion-col>
+            <ion-col size="2">
+              <ion-button 
+                fill="clear" 
+                size="small" 
+                color="danger"
+                (click)="removeHeader(key)">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        (click)="addEndpoint()"
+        [disabled]="!newEndpoint.name || !newEndpoint.url">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Adicionar Endpoint
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Eventos Recentes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📋 Eventos Recentes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="recentEvents.length > 0">
+        <ion-item *ngFor="let event of recentEvents">
+          <div class="event-info">
+            <h3>{{ event.event }}</h3>
+            <p>{{ formatTimestamp(event.timestamp) }}</p>
+            <small>ID: {{ event.id }}</small>
+          </div>
+          <div slot="end" class="event-data">
+            <code>{{ event.data | json }}</code>
+          </div>
+        </ion-item>
+      </ion-list>
+      
+      <div *ngIf="recentEvents.length === 0" class="empty-state">
+        <ion-icon name="pulse-outline" size="large" color="medium"></ion-icon>
+        <p>Nenhum evento recente</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Respostas Recentes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📡 Respostas Recentes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="recentResponses.length > 0">
+        <ion-item *ngFor="let response of recentResponses">
+          <ion-icon 
+            [name]="getStatusIcon(response.success)" 
+            [color]="getStatusColor(response.success)"
+            slot="start">
+          </ion-icon>
+          
+          <div class="response-info">
+            <h3>Status: {{ response.status }}</h3>
+            <p>{{ formatTimestamp(response.timestamp) }}</p>
+            <small>Endpoint: {{ response.endpoint_id }}</small>
+            <small *ngIf="response.error">Erro: {{ response.error }}</small>
+          </div>
+        </ion-item>
+      </ion-list>
+      
+      <div *ngIf="recentResponses.length === 0" class="empty-state">
+        <ion-icon name="radio-outline" size="large" color="medium"></ion-icon>
+        <p>Nenhuma resposta recente</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content> 

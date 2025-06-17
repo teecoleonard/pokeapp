@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon } from '../../models/pokemon.interface';
 import { PokemonService } from '../../services/pokemon.service';
+import { WebHookService } from '../../services/webhook.service';
 
 @Component({
   selector: 'app-home',
@@ -30,10 +31,17 @@ export class HomePage implements OnInit, OnDestroy {
     private pokemonService: PokemonService,
     private router: Router,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private webhookService: WebHookService
   ) {}
 
   ngOnInit() {
+    // Rastrear visita à página inicial
+    this.webhookService.trackPageVisited('home', {
+      user_agent: navigator.userAgent,
+      screen_resolution: `${screen.width}x${screen.height}`
+    });
+    
     this.loadInitialData();
   }
 
@@ -111,9 +119,17 @@ export class HomePage implements OnInit, OnDestroy {
         next: (pokemon) => {
           this.pokemons = [pokemon];
           this.hasMoreData = false;
+          
+          // Rastrear busca realizada
+          this.webhookService.trackSearchPerformed(value, 1, 'name');
         },
         error: async (error) => {
           console.error('Erro na busca:', error);
+          
+          // Rastrear busca que falhou
+          this.webhookService.trackSearchPerformed(value, 0, 'name');
+          this.webhookService.trackError('search_error', error.message, { search_term: value });
+          
           const toast = await this.toastController.create({
             message: 'Pokémon não encontrado.',
             duration: 2000,
@@ -125,6 +141,9 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onPokemonClick(pokemon: Pokemon) {
+    // Rastrear visualização do Pokémon
+    this.webhookService.trackPokemonViewed(pokemon.id, pokemon.name);
+    
     this.router.navigate(['/pokemon', pokemon.id]);
   }
 

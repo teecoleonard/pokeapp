@@ -1,0 +1,273 @@
+.stat-item {
+  text-align: center;
+  padding: 10px;
+  
+  h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.endpoint-info {
+  flex: 1;
+  
+  h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    word-break: break-all;
+  }
+}
+
+.endpoint-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.event-chip {
+  margin: 2px;
+  font-size: 0.75rem;
+}
+
+.events-selection {
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  ion-chip {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.header-item {
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+  
+  ion-input {
+    --background: var(--ion-color-step-50);
+    --padding-start: 10px;
+    --padding-end: 10px;
+    border-radius: 6px;
+  }
+}
+
+.event-info {
+  flex: 1;
+  
+  h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 0 0 5px 0;
+    font-size: 0.8rem;
+    color: var(--ion-color-medium);
+  }
+  
+  small {
+    font-size: 0.7rem;
+    color: var(--ion-color-medium);
+    opacity: 0.8;
+  }
+}
+
+.event-data {
+  max-width: 200px;
+  
+  code {
+    font-size: 0.7rem;
+    background: var(--ion-color-light);
+    padding: 5px;
+    border-radius: 4px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.response-info {
+  flex: 1;
+  
+  h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0 0 5px 0;
+    font-size: 0.8rem;
+    color: var(--ion-color-medium);
+  }
+  
+  small {
+    font-size: 0.7rem;
+    color: var(--ion-color-medium);
+    display: block;
+    margin-bottom: 2px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--ion-color-medium);
+  
+  ion-icon {
+    opacity: 0.5;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .endpoint-info {
+    h3 {
+      font-size: 1rem;
+    }
+    
+    p {
+      font-size: 0.8rem;
+    }
+  }
+  
+  .endpoint-actions {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .events-selection {
+    ion-chip {
+      font-size: 0.7rem;
+    }
+  }
+  
+  .event-data {
+    max-width: 150px;
+    
+    code {
+      font-size: 0.6rem;
+    }
+  }
+}
+
+// Animações
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s infinite;
+}
+
+// Estados de sucesso/erro
+.success-indicator {
+  color: var(--ion-color-success);
+}
+
+.error-indicator {
+  color: var(--ion-color-danger);
+}
+
+.warning-indicator {
+  color: var(--ion-color-warning);
+}
+
+// Cards especiais
+ion-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  ion-card-header {
+    padding-bottom: 10px;
+    
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+}
+
+// Toggle customizado
+ion-toggle {
+  --handle-background-checked: var(--ion-color-success);
+  --track-background-checked: var(--ion-color-success-tint);
+}
+
+// Botões customizados
+ion-button {
+  --border-radius: 8px;
+  
+  &[expand="block"] {
+    margin: 16px 0 8px 0;
+  }
+}
+
+// Lista customizada
+ion-list {
+  background: transparent;
+  
+  ion-item {
+    --background: transparent;
+    --border-color: var(--ion-color-light-shade);
+    --padding-start: 0;
+    --padding-end: 0;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Input customizado
+ion-input {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
+  --padding-start: 12px;
+  --padding-end: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+} 

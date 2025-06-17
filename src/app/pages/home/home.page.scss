@@ -172,7 +172,7 @@
   }
 }
 
-// Responsividade
+// Responsividade 
 @media (max-width: 576px) {
   .pokemon-image {
     width: 100px;
@@ -254,7 +254,7 @@
   }
 }
 
-// Animações
+// Animações para o scroll infinito
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -285,7 +285,7 @@ ion-col {
   }
 }
 
-// Loading spinner customizado
+// Loading spinner customizado para o scroll infinito acima
 ion-infinite-scroll-content {
   --color: var(--ion-color-primary);
 } 

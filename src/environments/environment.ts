@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  enableWebhooks: false // Desabilitar webhooks em desenvolvimento
 };
 
 /*

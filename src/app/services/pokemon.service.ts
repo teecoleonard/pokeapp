@@ -8,6 +8,7 @@ import {
   PokemonListItem, 
   PokemonSpecies 
 } from '../models/pokemon.interface';
+import { WebHookService } from './webhook.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class PokemonService {
   private favoritesSubject = new BehaviorSubject<Pokemon[]>([]);
   public favorites$ = this.favoritesSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private webhookService: WebHookService
+  ) {
     this.loadFavoritesFromStorage();
   }
 
@@ -88,6 +92,10 @@ export class PokemonService {
       const updatedFavorites = [...currentFavorites, pokemon];
       this.favoritesSubject.next(updatedFavorites);
       this.saveFavoritesToStorage(updatedFavorites);
+      
+      // Enviar evento de webhook
+      this.webhookService.trackPokemonFavorited(pokemon.id, pokemon.name, 'added');
+      
       console.log(`${pokemon.name} adicionado aos favoritos!`);
     }
   }
@@ -98,7 +106,10 @@ export class PokemonService {
     const updatedFavorites = currentFavorites.filter(pokemon => pokemon.id !== pokemonId);
     this.favoritesSubject.next(updatedFavorites);
     this.saveFavoritesToStorage(updatedFavorites);
+    
     if (pokemonToRemove) {
+      // Enviar evento de webhook
+      this.webhookService.trackPokemonFavorited(pokemonToRemove.id, pokemonToRemove.name, 'removed');
       console.log(`${pokemonToRemove.name} removido dos favoritos!`);
     }
   }

@@ -25,7 +25,6 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- Barra de pesquisa -->
   <ion-searchbar 
     [(ngModel)]="searchTerm"
     (ionInput)="onSearchChange($event)"
@@ -34,7 +33,6 @@
     showClearButton="focus">
   </ion-searchbar>
 
-  <!-- Grid de Pokémons -->
   <ion-grid>
     <ion-row>
       <ion-col 
@@ -110,7 +108,6 @@
     <p>Nenhum Pokémon encontrado</p>
   </div>
 
-  <!-- Infinite scroll -->
   <ion-infinite-scroll 
     *ngIf="hasMoreData"
     (ionInfinite)="onIonInfinite($event)">
