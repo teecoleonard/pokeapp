@@ -251,20 +251,6 @@ ionic capacitor build android
 - **HTTP caching** com interceptors
 - **Bundle splitting** por rotas
 
-## 🔮 **Roadmap Futuro**
-
-### **Próximas Funcionalidades**
-- [ ] **PWA** com cache offline completo
-- [ ] **Comparador de Pokémons** lado a lado
-- [ ] **Sistema de times** personalizados
-- [ ] **Calculadora de danos** para batalhas
-- [ ] **Movimentos detalhados** com animações
-- [ ] **Localização** multilíngue (PT/EN/ES)
-- [ ] **Push notifications** para novos Pokémons
-- [ ] **Modo batalha** simulado
-- [ ] **Evolução interativa** com árvores
-- [ ] **Integração social** para compartilhamento
-
 ### **Melhorias Técnicas**
 - [ ] **Testes automatizados** (Unit + E2E)
 - [ ] **CI/CD pipeline** com GitHub Actions
@@ -275,15 +261,6 @@ ionic capacitor build android
 
 ---
 
-## 👨‍💻 **Desenvolvedor**
-
-Aplicação desenvolvida seguindo as melhores práticas de desenvolvimento mobile e web, com foco em:
-- ✅ **Código limpo** e manutenível
-- ✅ **Performance** otimizada
-- ✅ **Experiência do usuário** excepcional
-- ✅ **Responsividade** completa
-- ✅ **Acessibilidade** para todos os usuários
-
-**Stack**: Ionic 8 + Angular 19 + TypeScript + PokéAPI
-
-*"Catch 'em all... digitally!"* 🎮⚡ 
+<div align="center">
+  <p>Desenvolvido por Leonardo Henrique</p>
+</div>
