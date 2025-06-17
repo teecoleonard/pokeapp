@@ -48,19 +48,30 @@
           <ion-label>Configurações</ion-label>
         </ion-item-divider>
         
-        <ion-item>
-          <ion-icon name="settings" slot="start"></ion-icon>
-          <ion-label>Configurações</ion-label>
-        </ion-item>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/webhook-admin" routerDirection="root">
+            <ion-icon name="server" slot="start"></ion-icon>
+            <ion-label>WebHook Admin</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         
-        <ion-item>
-          <ion-icon name="information-circle" slot="start"></ion-icon>
-          <ion-label>Sobre</ion-label>
-        </ion-item>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/settings" routerDirection="root">
+            <ion-icon name="settings" slot="start"></ion-icon>
+            <ion-label>Configurações</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/about" routerDirection="root">
+            <ion-icon name="information-circle" slot="start"></ion-icon>
+            <ion-label>Sobre</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </ion-list>
     </ion-content>
   </ion-menu>
 
   <!-- Conteúdo Principal -->
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <ion-router-outlet id="main-content" main></ion-router-outlet>
 </ion-app>

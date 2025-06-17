@@ -40,5 +40,17 @@ export const routes: Routes = [
   {
     path: 'pokemon/:id',
     loadComponent: () => import('./pages/pokemon-details/pokemon-details.page').then(m => m.PokemonDetailsPage)
+  },
+  {
+    path: 'webhook-admin',
+    loadComponent: () => import('./pages/webhook-admin/webhook-admin.page').then(m => m.WebHookAdminPage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then(m => m.SettingsPage)
+  },
+  {
+    path: 'about',
+    loadComponent: () => import('./pages/about/about.page').then(m => m.AboutPage)
   }
 ];

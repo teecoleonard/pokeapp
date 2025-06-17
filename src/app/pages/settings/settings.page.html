@@ -1,0 +1,206 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back" slot="icon-only" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="light">⚙️ Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Aparência -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🎨 Aparência</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label>Tema</ion-label>
+        <ion-select 
+          [(ngModel)]="settings.theme" 
+          (ionChange)="onThemeChange()"
+          interface="popover">
+          <ion-select-option *ngFor="let option of themeOptions" [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h2>Animações</h2>
+          <p>Ativar animações na interface</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.showAnimations" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Idioma</ion-label>
+        <ion-select 
+          [(ngModel)]="settings.language" 
+          (ionChange)="onLanguageChange()"
+          interface="popover">
+          <ion-select-option *ngFor="let option of languageOptions" [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Notificações -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🔔 Notificações</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label>
+          <h2>Notificações Push</h2>
+          <p>Receber notificações sobre novos Pokémon</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.notifications" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h2>Efeitos Sonoros</h2>
+          <p>Sons ao interagir com a aplicação</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.soundEffects" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Cache e Performance -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>💾 Cache e Performance</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label>
+          <h2>Cache Automático</h2>
+          <p>Armazenar dados para acesso offline</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.autoCache" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tamanho Máximo do Cache</ion-label>
+        <ion-select 
+          [(ngModel)]="settings.maxCacheSize" 
+          (ionChange)="saveSettings()"
+          interface="popover">
+          <ion-select-option *ngFor="let option of cacheSizeOptions" [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Estatísticas do Cache -->
+      <div class="cache-stats">
+        <h3>📊 Estatísticas do Cache</h3>
+        
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <div class="stat-item">
+                <h4>{{ formatBytes(cacheStats.currentSize) }}</h4>
+                <p>Usado</p>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="stat-item">
+                <h4>{{ cacheStats.totalItems }}</h4>
+                <p>Itens</p>
+              </div>
+            </ion-col>
+            <ion-col size="4">
+              <div class="stat-item">
+                <h4>{{ formatDate(cacheStats.lastCleared) }}</h4>
+                <p>Última Limpeza</p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-button expand="block" fill="outline" (click)="clearCache()">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Limpar Cache
+        </ion-button>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Atualizações -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🔄 Atualizações</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label>
+          <h2>Atualizações Automáticas</h2>
+          <p>Verificar automaticamente por atualizações</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.autoUpdate" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+      <ion-button expand="block" fill="outline">
+        <ion-icon name="refresh" slot="start"></ion-icon>
+        Verificar Atualizações
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Desenvolvedor -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>👨‍💻 Desenvolvedor</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-label>
+          <h2>Modo Debug</h2>
+          <p>Ativar logs detalhados (apenas desenvolvedores)</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="settings.debugMode" (ionChange)="saveSettings()"></ion-toggle>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Ações -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🔧 Ações</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-button expand="block" fill="outline" (click)="resetSettings()">
+        <ion-icon name="refresh" slot="start"></ion-icon>
+        Resetar Configurações
+      </ion-button>
+
+      <ion-button expand="block" fill="outline" (click)="exportSettings()">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Exportar Configurações
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content> 

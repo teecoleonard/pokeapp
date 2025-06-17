@@ -1,18 +1,13 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Busca Avançada</ion-title>
+    <ion-title color="light">Busca Avançada</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Busca Avançada</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
   <!-- Tipo de Busca -->
   <div class="search-section">
@@ -85,7 +80,7 @@
         
         <!-- Geração -->
         <ion-item>
-          <ion-select [(ngModel)]="selectedGeneration" placeholder="Selecione a geração">
+          <ion-select [(ngModel)]="selectedGeneration" placeholder="Selecione a geração" interface="popover">
             <ion-select-option *ngFor="let gen of generations" [value]="gen.value">
               {{ gen.label }}
             </ion-select-option>

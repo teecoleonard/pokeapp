@@ -1,0 +1,341 @@
+.app-header {
+  text-align: center;
+  padding: 32px 16px;
+  background: linear-gradient(135deg, var(--app-primary), var(--app-primary-shade));
+  color: white;
+  margin-bottom: 16px;
+  
+  .app-logo {
+    margin-bottom: 16px;
+    
+    ion-icon {
+      color: white;
+      opacity: 0.9;
+    }
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .app-tagline {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+  }
+  
+  .version-info {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+// Cards customizados
+ion-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--app-surface);
+  
+  ion-card-header {
+    padding-bottom: 8px;
+    
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--app-text);
+    }
+  }
+}
+
+// Items customizados
+ion-item {
+  --background: transparent;
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  --inner-border-width: 0 0 1px 0;
+  margin-bottom: 8px;
+  
+  &:last-child {
+    --inner-border-width: 0;
+    margin-bottom: 0;
+  }
+  
+  &[button] {
+    cursor: pointer;
+    
+    &:hover {
+      --background: var(--app-surface-variant);
+    }
+  }
+  
+  ion-label {
+    h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0 0 4px 0;
+      color: var(--app-text);
+    }
+    
+    p {
+      font-size: 0.85rem;
+      color: var(--app-text-secondary);
+      margin: 0;
+      word-break: break-all;
+    }
+  }
+}
+
+// Estatísticas
+.stat-item {
+  text-align: center;
+  padding: 12px 8px;
+  
+  h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 4px 0 0 0;
+    font-size: 0.85rem;
+    color: var(--app-text-secondary);
+    font-weight: 500;
+  }
+}
+
+// Funcionalidades
+.feature-item {
+  text-align: center;
+  padding: 16px 8px;
+  border-radius: 8px;
+  background: var(--app-surface-variant);
+  margin-bottom: 12px;
+  
+  ion-icon {
+    margin-bottom: 8px;
+  }
+  
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--app-text);
+  }
+  
+  p {
+    font-size: 0.85rem;
+    color: var(--app-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// Tecnologias
+.tech-item {
+  text-align: center;
+  padding: 12px 8px;
+  
+  ion-icon {
+    margin-bottom: 8px;
+  }
+  
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: var(--app-text);
+  }
+  
+  p {
+    font-size: 0.75rem;
+    color: var(--app-text-secondary);
+    margin: 0;
+  }
+}
+
+// Chips customizados
+ion-chip {
+  font-weight: 500;
+  
+  ion-label {
+    color: inherit !important;
+  }
+}
+
+// Botões customizados
+ion-button {
+  --border-radius: 8px;
+  margin: 8px 0;
+  
+  &[expand="block"] {
+    margin: 12px 0 8px 0;
+  }
+}
+
+// Copyright
+.copyright {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--app-border);
+  text-align: center;
+  
+  p {
+    font-size: 0.75rem;
+    color: var(--app-text-secondary);
+    margin: 4px 0;
+    line-height: 1.3;
+  }
+}
+
+// Grid customizado
+ion-grid {
+  padding: 0;
+  
+  ion-row {
+    ion-col {
+      padding: 4px;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .app-header {
+    padding: 24px 16px;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    .app-tagline {
+      font-size: 0.9rem;
+    }
+  }
+  
+  ion-card {
+    margin: 8px;
+    
+    ion-card-header {
+      ion-card-title {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  .stat-item {
+    padding: 8px 4px;
+    
+    h3 {
+      font-size: 1.5rem;
+    }
+    
+    p {
+      font-size: 0.8rem;
+    }
+  }
+  
+  .feature-item {
+    padding: 12px 8px;
+    
+    h3 {
+      font-size: 0.9rem;
+    }
+    
+    p {
+      font-size: 0.8rem;
+    }
+  }
+  
+  .tech-item {
+    padding: 8px 4px;
+    
+    h4 {
+      font-size: 0.85rem;
+    }
+    
+    p {
+      font-size: 0.7rem;
+    }
+  }
+}
+
+// Animações
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.app-header {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+// Efeitos hover para desktop
+@media (hover: hover) {
+  .feature-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .tech-item {
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Estados especiais
+.highlight {
+  background: var(--ion-color-primary-tint);
+  color: var(--ion-color-primary-contrast);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+// Ajustes para tema escuro
+.dark-theme {
+  .app-header {
+    background: linear-gradient(135deg, var(--app-primary), var(--app-primary-shade));
+  }
+  
+  ion-card {
+    background: var(--app-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .feature-item {
+    background: var(--app-surface-variant);
+    
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+} 

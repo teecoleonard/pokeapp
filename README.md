@@ -1,4 +1,4 @@
-# 🎮 PokéApp - Pokédx Completa & Profissional
+# 🎮 PokéApp - Pokédex Completa & Profissional
 
 <div align="center">
   <img src="./docs/screenshots/app-icon.png" alt="PokéApp Logo" width="128" height="128">
@@ -24,7 +24,6 @@
 - [🚀 Como Executar](#-como-executar)
 - [🧪 Testes](#-testes-automatizados)
 - [📊 Performance](#-performance)
-- [🤝 Contribuição](#-contribuição)
 
 ---
 
@@ -437,7 +436,7 @@ const API_BASE = "https://pokeapi.co/api/v2"
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido como **demonstração técnica** para uma vaga de emprego pela BSN Tecnologia e está disponível sob a licença MIT.
+Este projeto foi desenvolvido como **demonstração técnica** para a empresa BSN Tecnologia e está disponível sob a licença MIT.
 
 ---
 

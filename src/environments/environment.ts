@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  enableWebhooks: false // Desabilitar webhooks em desenvolvimento
+  enableWebhooks: true // Webhooks habilitados para desenvolvimento
 };
 
 /*

@@ -1,0 +1,210 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back" slot="icon-only" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="light">ℹ️ Sobre o App</ion-title>
+    <ion-buttons slot="end">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Header do App -->
+  <div class="app-header">
+    <div class="app-logo">
+      <ion-icon name="library" size="large"></ion-icon>
+    </div>
+    <h1>{{ appInfo.name }}</h1>
+    <p class="app-tagline">{{ appInfo.description }}</p>
+    <div class="version-info">
+      <ion-chip color="primary">
+        <ion-label>v{{ appInfo.version }}</ion-label>
+      </ion-chip>
+      <ion-chip color="medium">
+        <ion-label>Build {{ appInfo.buildNumber }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <!-- Informações da Aplicação -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📱 Informações da Aplicação</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item>
+        <ion-icon name="calendar" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>Data de Lançamento</h2>
+          <p>{{ formatDate(appInfo.releaseDate) }} ({{ calculateAppAge() }})</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="person" slot="start" color="secondary"></ion-icon>
+        <ion-label>
+          <h2>Desenvolvedor</h2>
+          <p>{{ appInfo.developer }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="business" slot="start" color="tertiary"></ion-icon>
+        <ion-label>
+          <h2>Empresa</h2>
+          <p>{{ appInfo.company }}</p>
+        </ion-label>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estatísticas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>📊 Estatísticas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ appStats.totalPokemon }}</h3>
+              <p>Pokémon</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ appStats.totalTypes }}</h3>
+              <p>Tipos</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ appStats.totalGenerations }}</h3>
+              <p>Gerações</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h3>{{ appStats.totalAbilities }}</h3>
+              <p>Habilidades</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Funcionalidades -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🎯 Funcionalidades</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let feature of features">
+            <div class="feature-item">
+              <ion-icon [name]="feature.icon" [color]="feature.color" size="large"></ion-icon>
+              <h3>{{ feature.title }}</h3>
+              <p>{{ feature.description }}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Tecnologias -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>⚡ Tecnologias Utilizadas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="4" *ngFor="let tech of technologies">
+            <div class="tech-item">
+              <ion-icon [name]="tech.icon" [color]="tech.color" size="large"></ion-icon>
+              <h4>{{ tech.name }}</h4>
+              <p>v{{ tech.version }}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Links Úteis -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🔗 Links Úteis</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item *ngFor="let link of links" button (click)="openLink(link.url)">
+        <ion-icon [name]="link.icon" slot="start" [color]="link.color"></ion-icon>
+        <ion-label>
+          <h2>{{ link.title }}</h2>
+          <p>{{ link.url }}</p>
+        </ion-label>
+        <ion-icon name="open" slot="end" color="medium"></ion-icon>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Feedback -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>💬 Feedback</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <p>Sua opinião é muito importante! Ajude-nos a melhorar a aplicação.</p>
+      
+      <ion-button expand="block" (click)="sendFeedback()">
+        <ion-icon name="mail" slot="start"></ion-icon>
+        Enviar Feedback
+      </ion-button>
+
+      <ion-button expand="block" fill="outline" (click)="shareApp()">
+        <ion-icon name="share" slot="start"></ion-icon>
+        Compartilhar App
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Créditos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>🙏 Créditos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <p><strong>Dados dos Pokémon:</strong> PokéAPI (pokeapi.co)</p>
+      <p><strong>Ícones:</strong> Ionicons</p>
+      <p><strong>Framework:</strong> Ionic + Angular</p>
+      
+      <div class="copyright">
+        <p>© 2024 {{ appInfo.developer }}. Todos os direitos reservados.</p>
+        <p>Pokémon é uma marca registrada da Nintendo/Game Freak.</p>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content> 

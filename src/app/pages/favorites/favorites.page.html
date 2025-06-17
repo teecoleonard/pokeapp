@@ -1,23 +1,18 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Meus Favoritos</ion-title>
+    <ion-title color="light">Meus Favoritos</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="exportFavorites()" *ngIf="favorites.length > 0">
-        <ion-icon name="download" slot="icon-only"></ion-icon>
+        <ion-icon name="download" slot="icon-only" color="light"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Meus Favoritos ({{ favorites.length }})</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
   <!-- Filtros e Busca -->
   <div class="filters-section" *ngIf="favorites.length > 0">
@@ -37,7 +32,8 @@
             <ion-select 
               [(ngModel)]="selectedType" 
               (ionChange)="onTypeChange()"
-              placeholder="Todos os tipos">
+              placeholder="Todos os tipos"
+              interface="popover">
               <ion-select-option value="">Todos os tipos</ion-select-option>
               <ion-select-option *ngFor="let type of availableTypes" [value]="type">
                 {{ formatPokemonName(type) }}
@@ -51,7 +47,8 @@
             <ion-select 
               [(ngModel)]="sortBy" 
               (ionChange)="onSortChange()"
-              placeholder="Ordenar por">
+              placeholder="Ordenar por"
+              interface="popover">
               <ion-select-option value="id">ID</ion-select-option>
               <ion-select-option value="name">Nome</ion-select-option>
               <ion-select-option value="height">Altura</ion-select-option>
@@ -85,23 +82,38 @@
           size-md="4" 
           size-lg="3" 
           *ngFor="let pokemon of filteredFavorites; trackBy: trackByPokemonId">
-          <ion-card (click)="onPokemonClick(pokemon)" class="pokemon-card grid-view">
+          <ion-card 
+            class="pokemon-card" 
+            (click)="onPokemonClick(pokemon)"
+            [style.--type-color]="getTypeColor(pokemon.types[0].type.name || 'normal')">
+          
+            <ion-card-header class="pokemon-header">
+              <div class="pokemon-number">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
+              <ion-button 
+                fill="clear" 
+                size="small"
+                class="favorite-button"
+                (click)="removeFromFavorites(pokemon, $event)">
+                <ion-icon 
+                  name="heart"
+                  color="danger"
+                  style="opacity: 1">
+                </ion-icon>
+              </ion-button>
+            </ion-card-header>
+
             <div class="pokemon-image-container">
               <img 
                 [src]="getPokemonImage(pokemon)" 
                 [alt]="pokemon.name"
-                class="pokemon-image">
-              <ion-button 
-                (click)="removeFromFavorites(pokemon, $event)"
-                fill="clear" 
-                class="remove-button">
-                <ion-icon name="heart" color="danger"></ion-icon>
-              </ion-button>
+                class="pokemon-image"
+                loading="lazy">
             </div>
-            
-            <ion-card-content>
-              <div class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
-              <h3 class="pokemon-name">{{ formatPokemonName(pokemon.name) }}</h3>
+
+            <ion-card-content class="pokemon-content">
+              <ion-card-title class="pokemon-name">
+                {{ formatPokemonName(pokemon.name) }}
+              </ion-card-title>
               
               <div class="pokemon-types">
                 <ion-chip 
@@ -112,9 +124,15 @@
                 </ion-chip>
               </div>
 
-              <div class="pokemon-stats" *ngIf="pokemon.height && pokemon.weight">
-                <span class="stat">{{ (pokemon.height / 10).toFixed(1) }}m</span>
-                <span class="stat">{{ (pokemon.weight / 10).toFixed(1) }}kg</span>
+              <div class="pokemon-stats">
+                <div class="stat-item">
+                  <span class="stat-label">Altura:</span>
+                  <span class="stat-value">{{ (pokemon.height / 10).toFixed(1) }}m</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Peso:</span>
+                  <span class="stat-value">{{ (pokemon.weight / 10).toFixed(1) }}kg</span>
+                </div>
               </div>
             </ion-card-content>
           </ion-card>

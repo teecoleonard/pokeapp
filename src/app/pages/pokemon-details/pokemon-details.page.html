@@ -2,7 +2,7 @@
   <ion-toolbar [style.--background]="pokemon ? getTypeColor(pokemon.types[0].type.name || 'normal') : '#68A090'">
     <ion-buttons slot="start">
       <ion-button (click)="goBack()" fill="clear">
-        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+        <ion-icon name="arrow-back" color="light" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title *ngIf="pokemon">
@@ -12,7 +12,7 @@
       <ion-button (click)="toggleFavorite()" fill="clear">
         <ion-icon 
           name="heart"
-          [color]="isFavorite() ? 'light' : 'light'"
+          [color]="isFavorite() ? 'danger' : 'light'"
           [style.opacity]="isFavorite() ? '1' : '0.3'"
           slot="icon-only">
         </ion-icon>
@@ -196,12 +196,5 @@
       </ion-button>
     </div>
   </div>
-
-  <!-- Botão para voltar ao menu principal -->
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="goBack()" class="back-button-simple">
-      Voltar
-    </ion-fab-button>
-  </ion-fab>
 
 </ion-content> 

@@ -34,4 +34,389 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/* =============================================================================
+   TEMA ESCURO PERSONALIZADO - POKÉAPP
+   ============================================================================= */
+
+/* Cores principais */
+:root {
+  --app-background: #1a1a1a;          /* Preto claro */
+  --app-primary: #1565c0;             /* Azul escuro */
+  --app-primary-shade: #0d47a1;       /* Azul mais escuro */
+  --app-primary-tint: #1976d2;        /* Azul mais claro */
+  --app-text: #ffffff;                /* Branco */
+  --app-text-secondary: #b0b0b0;      /* Cinza claro */
+  --app-surface: #2a2a2a;             /* Superfície escura */
+  --app-surface-variant: #333333;     /* Superfície variante */
+  --app-border: #404040;              /* Bordas */
+}
+
+/* =============================================================================
+   ESTRUTURA GLOBAL DO APP
+   ============================================================================= */
+
+ion-app {
+  background-color: var(--app-background) !important;
+  color: var(--app-text) !important;
+}
+
+.ion-page {
+  background-color: var(--app-background) !important;
+  color: var(--app-text) !important;
+}
+
+ion-content {
+  --background: var(--app-background);
+  --color: var(--app-text);
+  background-color: var(--app-background) !important;
+}
+
+/* =============================================================================
+   HEADER E TOOLBAR
+   ============================================================================= */
+
+ion-header {
+  background-color: var(--app-primary) !important;
+}
+
+ion-toolbar {
+  --background: var(--app-primary);
+  --color: var(--app-text);
+  --border-color: var(--app-primary-shade);
+}
+
+ion-title {
+  color: var(--app-text) !important;
+}
+
+ion-menu-button {
+  color: var(--app-text) !important;
+}
+
+ion-button[fill="clear"] ion-icon {
+  color: var(--app-text) !important;
+}
+
+/* =============================================================================
+   CARDS E CONTAINERS
+   ============================================================================= */
+
+ion-card {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  background-color: var(--app-surface) !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-border);
+}
+
+ion-card-header {
+  background-color: transparent !important;
+  color: var(--app-text) !important;
+}
+
+ion-card-title {
+  color: var(--app-text) !important;
+}
+
+ion-card-subtitle {
+  color: var(--app-text-secondary) !important;
+}
+
+ion-card-content {
+  background-color: transparent !important;
+  color: var(--app-text) !important;
+}
+
+/* =============================================================================
+   LISTAS E ITEMS
+   ============================================================================= */
+
+ion-list {
+  background: transparent !important;
+}
+
+ion-item {
+  --background: transparent;
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  --inner-border-width: 0 0 1px 0;
+  background-color: transparent !important;
+  color: var(--app-text) !important;
+}
+
+ion-item-divider {
+  --background: var(--app-surface-variant);
+  --color: var(--app-text);
+  background-color: var(--app-surface-variant) !important;
+  color: var(--app-text) !important;
+}
+
+ion-label {
+  color: var(--app-text) !important;
+}
+
+/* =============================================================================
+   INPUTS E FORMS
+   ============================================================================= */
+
+ion-searchbar {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-secondary);
+  --icon-color: var(--app-text);
+  --clear-button-color: var(--app-text);
+  --cancel-button-color: var(--app-text);
+  background-color: var(--app-surface) !important;
+}
+
+ion-input {
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-secondary);
+  color: var(--app-text) !important;
+  
+  input {
+    color: var(--app-text) !important;
+  }
+}
+
+ion-textarea {
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-secondary);
+  color: var(--app-text) !important;
+  
+  textarea {
+    color: var(--app-text) !important;
+  }
+}
+
+ion-select {
+  --color: var(--app-text);
+  color: var(--app-text) !important;
+}
+
+ion-checkbox {
+  --color: var(--app-primary);
+  --color-checked: var(--app-primary);
+}
+
+ion-radio {
+  --color: var(--app-primary);
+  --color-checked: var(--app-primary);
+}
+
+ion-toggle {
+  --color: var(--app-primary);
+  --color-checked: var(--app-primary);
+}
+
+/* =============================================================================
+   NAVIGATION
+   ============================================================================= */
+
+ion-segment {
+  --background: var(--app-surface);
+  background-color: var(--app-surface) !important;
+}
+
+ion-segment-button {
+  --color: var(--app-text-secondary);
+  --color-checked: var(--app-primary);
+  --background-checked: var(--app-surface-variant);
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-color: var(--app-border);
+}
+
+ion-tabs {
+  background-color: var(--app-surface) !important;
+}
+
+ion-tab-bar {
+  --background: var(--app-surface);
+  --color: var(--app-text-secondary);
+  --color-selected: var(--app-primary);
+  background-color: var(--app-surface) !important;
+  border-top: 1px solid var(--app-border);
+}
+
+ion-tab-button {
+  --color: var(--app-text-secondary);
+  --color-selected: var(--app-primary);
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+ion-button {
+  --color: var(--app-text);
+  --background: var(--app-primary);
+  --background-activated: var(--app-primary-shade);
+  --background-hover: var(--app-primary-tint);
+  --border-color: var(--app-primary);
+  --border-radius: 8px;
+}
+
+ion-button[fill="outline"] {
+  --color: var(--app-primary);
+  --background: transparent;
+  --border-color: var(--app-primary);
+}
+
+ion-button[fill="clear"] {
+  --color: var(--app-text);
+  --background: transparent;
+}
+
+.button-inner {
+  color: inherit !important;
+}
+
+/* =============================================================================
+   CHIPS E BADGES
+   ============================================================================= */
+
+ion-chip {
+  --color: var(--app-text);
+  color: var(--app-text) !important;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+ion-badge {
+  --color: var(--app-text);
+  --background: var(--app-primary);
+}
+
+/* =============================================================================
+   PROGRESS E SLIDERS
+   ============================================================================= */
+
+ion-progress-bar {
+  --background: var(--app-surface-variant);
+  --progress-background: var(--app-primary);
+}
+
+ion-range {
+  --bar-background: var(--app-surface-variant);
+  --bar-background-active: var(--app-primary);
+  --knob-background: var(--app-primary);
+  --knob-border-color: var(--app-primary);
+  --pin-background: var(--app-primary);
+  --pin-color: var(--app-text);
+}
+
+/* =============================================================================
+   MODALS E POPOVERS
+   ============================================================================= */
+
+ion-modal {
+  --background: var(--app-background);
+  --color: var(--app-text);
+}
+
+ion-popover {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+ion-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* =============================================================================
+   MENU LATERAL
+   ============================================================================= */
+
+ion-menu {
+  --background: var(--app-background);
+  --color: var(--app-text);
+}
+
+ion-menu ion-content {
+  --background: var(--app-background);
+}
+
+ion-menu ion-item {
+  --background: transparent;
+  --color: var(--app-text);
+}
+
+ion-menu ion-item:hover {
+  --background: var(--app-surface);
+}
+
+/* =============================================================================
+   LOADING E ESTADOS
+   ============================================================================= */
+
+ion-loading {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+}
+
+ion-spinner {
+  --color: var(--app-primary);
+}
+
+ion-skeleton-text {
+  --background: var(--app-surface-variant);
+}
+
+/* =============================================================================
+   TOAST E ALERTS
+   ============================================================================= */
+
+ion-toast {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border: 1px solid var(--app-border);
+}
+
+ion-alert {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+}
+
+/* =============================================================================
+   UTILITÁRIOS
+   ============================================================================= */
+
+.text-white {
+  color: var(--app-text) !important;
+}
+
+.bg-dark {
+  background-color: var(--app-background) !important;
+}
+
+.bg-surface {
+  background-color: var(--app-surface) !important;
+}
+
+/* Force white text on specific elements */
+h1, h2, h3, h4, h5, h6, p, span, div {
+  color: var(--app-text);
+}
+
+/* Ensure all text is visible */
+* {
+  --ion-text-color: var(--app-text);
+}
+
+/* Force white text in all input fields for visibility in dark theme */
+ion-input input,
+ion-textarea textarea,
+ion-searchbar input {
+  color: var(--app-text) !important;
+}
+
+/* Ensure input backgrounds are dark for contrast in dark theme */
+ion-input,
+ion-textarea {
+  --background: var(--app-surface);
+  background-color: var(--app-surface) !important;
+}

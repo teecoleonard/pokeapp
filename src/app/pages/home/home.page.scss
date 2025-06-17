@@ -1,15 +1,16 @@
 .pokemon-card {
   margin: 6px 0;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   cursor: pointer;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--type-color, #68A090) 0%, rgba(255, 255, 255, 0.9) 50%);
+  background: linear-gradient(135deg, var(--type-color, #68A090) 0%, var(--app-surface, #2a2a2a) 50%);
+  border: 1px solid var(--app-border, #404040);
   
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
   }
 
   &:active {
@@ -89,17 +90,18 @@
 }
 
 .pokemon-content {
-  background: white;
+  background: var(--app-surface, #2a2a2a);
   border-radius: 16px 16px 0 0;
   margin: 0;
   padding: 28px;
+  color: var(--app-text, #ffffff);
 }
 
 .pokemon-name {
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--app-text, #ffffff);
   margin-bottom: 16px;
 }
 
@@ -134,14 +136,14 @@
   flex: 1;
   text-align: center;
   padding: 8px;
-  background: rgba(108, 160, 144, 0.1);
+  background: var(--app-surface-variant, #333333);
   border-radius: 12px;
 }
 
 .stat-label {
   display: block;
   font-size: 14px;
-  color: #7f8c8d;
+  color: var(--app-text-secondary, #b0b0b0);
   margin-bottom: 6px;
   font-weight: 600;
 }
@@ -150,7 +152,7 @@
   display: block;
   font-size: 18px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--app-text, #ffffff);
 }
 
 .empty-state {
@@ -160,15 +162,17 @@
   justify-content: center;
   padding: 60px 20px;
   text-align: center;
-  color: #7f8c8d;
+  color: var(--app-text-secondary, #b0b0b0);
   
   ion-icon {
     margin-bottom: 16px;
+    color: var(--app-text-secondary, #b0b0b0);
   }
   
   p {
     font-size: 16px;
     margin: 0;
+    color: var(--app-text, #ffffff);
   }
 }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WebHookService, WebHookEndpoint, WebHookEvent, WebHookResponse } from '../../services/webhook.service';
@@ -44,7 +45,10 @@ export class WebHookAdminPage implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private webhookService: WebHookService) {}
+  constructor(
+    private webhookService: WebHookService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadData();
@@ -267,5 +271,9 @@ export class WebHookAdminPage implements OnInit, OnDestroy {
     // Resetar estatísticas (isso seria implementado no service)
     this.recentEvents = [];
     this.recentResponses = [];
+  }
+
+  goBack() {
+    this.router.navigate(['/tabs/home']);
   }
 } 

@@ -63,11 +63,12 @@
 .header-item {
   margin: 10px 0;
   padding: 10px;
-  background: var(--ion-color-light);
+  background: var(--app-surface-variant);
   border-radius: 8px;
   
   ion-input {
-    --background: var(--ion-color-step-50);
+    --background: var(--app-surface);
+    --color: var(--app-text);
     --padding-start: 10px;
     --padding-end: 10px;
     border-radius: 6px;
@@ -102,13 +103,15 @@
   
   code {
     font-size: 0.7rem;
-    background: var(--ion-color-light);
+    background: var(--app-surface-variant);
+    color: var(--app-text);
     padding: 5px;
     border-radius: 4px;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border: 1px solid var(--app-border);
   }
 }
 
@@ -262,12 +265,18 @@ ion-list {
   }
 }
 
-// Input customizado
+// Input customizado - seguindo tema global
 ion-input {
-  --background: var(--ion-color-light);
-  --color: var(--ion-color-dark);
+  --background: var(--app-surface);
+  --color: var(--app-text);
   --padding-start: 12px;
   --padding-end: 12px;
   border-radius: 8px;
   margin: 8px 0;
+  background-color: var(--app-surface) !important;
+  
+  input {
+    color: var(--app-text) !important;
+    background-color: var(--app-surface) !important;
+  }
 } 
