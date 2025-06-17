@@ -1,7 +1,7 @@
 # 🎮 PokéApp - Pokédex Completa & Profissional
 
-<div align="center">
-  <img src="./docs/screenshots/app-icon.png" alt="PokéApp Logo" width="128" height="128">
+<div align="left">
+
   
   **Uma aplicação Pokédex moderna e completa construída com Ionic 8 + Angular 19**
   
@@ -9,9 +9,8 @@
   [![Angular](https://img.shields.io/badge/Angular-19.0-red.svg)](https://angular.io/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
   [![Tests](https://img.shields.io/badge/Tests-70+-green.svg)](#-testes-automatizados)
-</div>
 
----
+</div>
 
 ## 📖 Índice
 
@@ -104,35 +103,24 @@ Demonstrar competências em desenvolvimento de aplicações mobile modernas, inc
 
 ## 📸 Screenshots
 
-> **📝 Nota**: Screenshots serão adicionados em breve
+<div align="center">
 
-### 🏠 **Tela Principal**
-![home](https://github.com/user-attachments/assets/d3dd3e64-fdfe-407f-b002-21394062adeb)
-*Screenshot da Pokédx principal*
+### 🏠 **Telas Principais**
+| 🏠 Pokédx Principal | ❤️ Favoritos | 🔍 Detalhes Pokémon |
+|:---:|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/d3dd3e64-fdfe-407f-b002-21394062adeb" alt="Tela Principal" width="300"> | <img src="https://github.com/user-attachments/assets/c2216706-5d6f-498e-b798-61186fb37b88" alt="Favoritos" width="300"> | <img src="https://github.com/user-attachments/assets/a668c170-a6c9-4775-93e6-2c869a15ea91" alt="Detalhes do Pokémon" width="300"> |
 
-### ❤️ **Favoritos**
-![favoritos](https://github.com/user-attachments/assets/c2216706-5d6f-498e-b798-61186fb37b88)
-*Screenshot da página de favoritos*
+### 📊 **Funcionalidades Avançadas**
+| 🎨 Tipos Pokémon | 📊 Estatísticas |
+|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/65bb7c90-4672-40eb-afb3-cc6e90752041" alt="Tipos Pokémon" width="300"> | <img src="https://github.com/user-attachments/assets/0c9f75bc-52ab-447c-8040-b9f92ca330c5" alt="Estatísticas" width="300"> |
 
-### 🎨 **Tipos Pokémon**
-![tipos](https://github.com/user-attachments/assets/65bb7c90-4672-40eb-afb3-cc6e90752041)
-*Screenshot da enciclopédia de tipos*
+### 🔧 **Recursos Técnicos**
+| 🧪 Testes Automatizados | 🔗 WebHook Admin |
+|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/5650fea9-fd0b-43c7-b37f-abfe6e6af7ed" alt="Testes Automatizados" width="700"> | <img src="https://github.com/user-attachments/assets/68d9c377-8274-49a8-a473-46873f447301" alt="WebHook Admin" width="300"> |
 
-### 📊 **Estatísticas**
-![estatisticas](https://github.com/user-attachments/assets/0c9f75bc-52ab-447c-8040-b9f92ca330c5)
-*Screenshot da central de estatísticas*
-
-### 🔍 **Detalhes do Pokémon**
-![detalhes](https://github.com/user-attachments/assets/a668c170-a6c9-4775-93e6-2c869a15ea91)
-*Screenshot da página de detalhes completa*
-
-### 🧪 **Testes Automatizados**
-![image](https://github.com/user-attachments/assets/5650fea9-fd0b-43c7-b37f-abfe6e6af7ed)
-*Screenshot dos testes unitários rodando*
-
-### 🔗 **WebHook Admin**
-![webhook](https://github.com/user-attachments/assets/68d9c377-8274-49a8-a473-46873f447301)
-*Screenshot do painel de administração de webhooks*
+</div>
 
 ---
 
@@ -195,7 +183,7 @@ Demonstrar competências em desenvolvimento de aplicações mobile modernas, inc
 
 ## 🔧 Funcionalidades Técnicas
 
-### 🧪 **Testes Automatizados** *(NOVO)*
+### 🧪 **Testes Automatizados**
 - **70+ testes unitários** com Jasmine + Karma
 - **Cobertura completa** de serviços e componentes
 - **Testes de integração** com HTTP mocking
@@ -212,7 +200,7 @@ npm run test:coverage
 npm run test:watch
 ```
 
-### 🔗 **Sistema de WebHooks** *(NOVO)*
+### 🔗 **Sistema de WebHooks**
 - **Monitoramento em tempo real** de ações do usuário
 - **7 tipos de eventos** rastreados:
   - `pokemon_viewed` - Visualizações de Pokémon
@@ -495,7 +483,7 @@ Este projeto foi desenvolvido como **demonstração técnica** em resposta ao de
 
 ## 👨‍💻 Desenvolvedor
 
-<div align="center">
+<div align="left">
   
 **🎯 Projeto desenvolvido por Leonardo Henrique**
 
