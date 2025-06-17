@@ -85,7 +85,7 @@ Demonstrar competências em desenvolvimento de aplicações mobile modernas, inc
 | **Categoria** | **Funcionalidade** | **Status** |
 |---|---|---|
 | 🏠 **Core** | Pokédex principal com lista completa | ✅ Completo |
-| 🔍 **Busca** | Sistema de busca por nome e tipo | ✅ Completo | 🔄 **Ilustrativo** |
+| 🔍 **Busca** | Sistema de busca por nome e tipo | 🔄 **Ilustrativo** |
 | ❤️ **Favoritos** | Sistema completo de favoritos | ✅ Completo |
 | 🎨 **Tipos** | Enciclopédia de tipos Pokémon | ✅ Completo |
 | 📊 **Stats** | Central de estatísticas analíticas | ✅ Completo |
