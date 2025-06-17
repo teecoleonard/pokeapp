@@ -436,7 +436,7 @@ const API_BASE = "https://pokeapi.co/api/v2"
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido como **demonstração técnica** para uma vaga de emprego pela BSN Tecnologia e está disponível sob a licença MIT.
+Este projeto foi desenvolvido como **demonstração técnica** para a empresa BSN Tecnologia e está disponível sob a licença MIT.
 
 ---
 
