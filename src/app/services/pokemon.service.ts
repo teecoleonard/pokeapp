@@ -46,8 +46,8 @@ export class PokemonService {
       switchMap(pokemon => {
         return this.getPokemonSpecies(pokemon.id).pipe(
           map(species => ({
-            pokemon: pokemon,
-            species: species
+              pokemon: pokemon,
+              species: species
           }))
         );
       })

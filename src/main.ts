@@ -89,7 +89,26 @@ import {
   analytics,
   link,
   sendOutline,
-  statsChartOutline
+  statsChartOutline,
+  apps,
+  barChart,
+  server,
+  library,
+  resize,
+  ellipse,
+  fitness,
+  planet,
+  paperPlane,
+  close,
+  searchOutline,
+  calendar,
+  person,
+  business,
+  open,
+  mail,
+  globeOutline,
+  pulseOutline,
+  radioOutline
 } from 'ionicons/icons';
 
 import { routes } from './app/app.routes';
@@ -181,7 +200,26 @@ addIcons({
   analytics,
   link,
   'send-outline': sendOutline,
-  'stats-chart-outline': statsChartOutline
+  'stats-chart-outline': statsChartOutline,
+  apps,
+  'bar-chart': barChart,
+  server,
+  library,
+  resize,
+  ellipse,
+  fitness,
+  planet,
+  'paper-plane': paperPlane,
+  close,
+  'search-outline': searchOutline,
+  calendar,
+  person,
+  business,
+  open,
+  mail,
+  'globe-outline': globeOutline,
+  'pulse-outline': pulseOutline,
+  'radio-outline': radioOutline
 });
 
 bootstrapApplication(AppComponent, {
