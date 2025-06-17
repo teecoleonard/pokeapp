@@ -1,0 +1,190 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Meus Favoritos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="exportFavorites()" *ngIf="favorites.length > 0">
+        <ion-icon name="download" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Meus Favoritos ({{ favorites.length }})</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Filtros e Busca -->
+  <div class="filters-section" *ngIf="favorites.length > 0">
+    <!-- Busca -->
+    <ion-searchbar 
+      [(ngModel)]="searchQuery" 
+      (ionInput)="onSearchChange()"
+      placeholder="Buscar nos favoritos..."
+      show-clear-button="focus">
+    </ion-searchbar>
+
+    <!-- Filtros -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="4">
+          <ion-item>
+            <ion-select 
+              [(ngModel)]="selectedType" 
+              (ionChange)="onTypeChange()"
+              placeholder="Todos os tipos">
+              <ion-select-option value="">Todos os tipos</ion-select-option>
+              <ion-select-option *ngFor="let type of availableTypes" [value]="type">
+                {{ formatPokemonName(type) }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        
+        <ion-col size="12" size-md="4">
+          <ion-item>
+            <ion-select 
+              [(ngModel)]="sortBy" 
+              (ionChange)="onSortChange()"
+              placeholder="Ordenar por">
+              <ion-select-option value="id">ID</ion-select-option>
+              <ion-select-option value="name">Nome</ion-select-option>
+              <ion-select-option value="height">Altura</ion-select-option>
+              <ion-select-option value="weight">Peso</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        
+        <ion-col size="12" size-md="4">
+          <ion-segment [(ngModel)]="viewMode" class="view-mode-segment">
+            <ion-segment-button value="grid">
+              <ion-icon name="grid"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="list">
+              <ion-icon name="list"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Lista de Favoritos -->
+  <div *ngIf="filteredFavorites.length > 0" class="favorites-container">
+    <!-- Visualização em Grid -->
+    <ion-grid *ngIf="viewMode === 'grid'">
+      <ion-row>
+        <ion-col 
+          size="12" 
+          size-sm="6" 
+          size-md="4" 
+          size-lg="3" 
+          *ngFor="let pokemon of filteredFavorites; trackBy: trackByPokemonId">
+          <ion-card (click)="onPokemonClick(pokemon)" class="pokemon-card grid-view">
+            <div class="pokemon-image-container">
+              <img 
+                [src]="getPokemonImage(pokemon)" 
+                [alt]="pokemon.name"
+                class="pokemon-image">
+              <ion-button 
+                (click)="removeFromFavorites(pokemon, $event)"
+                fill="clear" 
+                class="remove-button">
+                <ion-icon name="heart" color="danger"></ion-icon>
+              </ion-button>
+            </div>
+            
+            <ion-card-content>
+              <div class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
+              <h3 class="pokemon-name">{{ formatPokemonName(pokemon.name) }}</h3>
+              
+              <div class="pokemon-types">
+                <ion-chip 
+                  *ngFor="let type of pokemon.types" 
+                  class="type-chip"
+                  [style.background-color]="getTypeColor(type.type.name)">
+                  {{ formatPokemonName(type.type.name) }}
+                </ion-chip>
+              </div>
+
+              <div class="pokemon-stats" *ngIf="pokemon.height && pokemon.weight">
+                <span class="stat">{{ (pokemon.height / 10).toFixed(1) }}m</span>
+                <span class="stat">{{ (pokemon.weight / 10).toFixed(1) }}kg</span>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Visualização em Lista -->
+    <div *ngIf="viewMode === 'list'" class="list-view">
+      <ion-card 
+        *ngFor="let pokemon of filteredFavorites; trackBy: trackByPokemonId"
+        (click)="onPokemonClick(pokemon)" 
+        class="pokemon-card list-view">
+        <div class="list-item-content">
+          <div class="pokemon-image-small">
+            <img [src]="getPokemonImage(pokemon)" [alt]="pokemon.name">
+          </div>
+          
+          <div class="pokemon-info">
+            <div class="pokemon-header">
+              <span class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+              <h3 class="pokemon-name">{{ formatPokemonName(pokemon.name) }}</h3>
+            </div>
+            
+            <div class="pokemon-types">
+              <ion-chip 
+                *ngFor="let type of pokemon.types" 
+                class="type-chip small"
+                [style.background-color]="getTypeColor(type.type.name)">
+                {{ formatPokemonName(type.type.name) }}
+              </ion-chip>
+            </div>
+          </div>
+          
+          <ion-button 
+            (click)="removeFromFavorites(pokemon, $event)"
+            fill="clear" 
+            class="remove-button-list">
+            <ion-icon name="heart" color="danger"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+
+  <!-- Estado Vazio -->
+  <div *ngIf="favorites.length === 0" class="empty-state">
+            <ion-icon name="heart" size="large" color="medium" style="opacity: 0.3"></ion-icon>
+    <h2>Nenhum favorito ainda</h2>
+    <p>Adicione Pokémon aos seus favoritos tocando no ❤️ na página de detalhes!</p>
+    <ion-button [routerLink]="['/tabs/home']" fill="solid">
+      <ion-icon name="search" slot="start"></ion-icon>
+      Explorar Pokémon
+    </ion-button>
+  </div>
+
+  <!-- Nenhum resultado encontrado -->
+  <div *ngIf="favorites.length > 0 && filteredFavorites.length === 0" class="no-results">
+    <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
+    <h2>Nenhum resultado encontrado</h2>
+    <p>Tente ajustar os filtros de busca</p>
+    <ion-button (click)="searchQuery = ''; selectedType = ''; applyFilters()" fill="outline">
+      Limpar Filtros
+    </ion-button>
+  </div>
+
+  <!-- FAB para limpar todos -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="favorites.length > 0">
+    <ion-fab-button color="danger" (click)="clearAllFavorites()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content> 

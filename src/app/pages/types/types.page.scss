@@ -1,0 +1,154 @@
+.types-container {
+  padding: 16px;
+}
+
+.intro-section {
+  text-align: center;
+  margin-bottom: 24px;
+  
+  p {
+    font-size: 16px;
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+.type-card {
+  margin: 8px 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .type-header {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+    }
+    
+    .type-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .type-name {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: capitalize;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  ion-card-content {
+    padding: 16px;
+    
+    .type-description {
+      font-size: 14px;
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    
+    .effectiveness-section {
+      margin-bottom: 16px;
+      
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: var(--ion-color-dark);
+      }
+      
+      .type-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        
+        .effectiveness-chip {
+          font-size: 11px;
+          height: 22px;
+          color: white;
+          font-weight: 500;
+          --border-radius: 11px;
+          margin: 0;
+          
+          &.strong {
+            border: 2px solid var(--ion-color-success);
+          }
+          
+          &.weak {
+            border: 2px solid var(--ion-color-danger);
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+    
+    .explore-button {
+      margin-top: 8px;
+      --border-radius: 12px;
+      font-weight: 500;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .type-card {
+    .type-header {
+      padding: 16px;
+      
+      .type-icon {
+        font-size: 28px;
+      }
+      
+      .type-name {
+        font-size: 18px;
+      }
+    }
+    
+    ion-card-content {
+      .effectiveness-section {
+        .type-chips {
+          .effectiveness-chip {
+            font-size: 10px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .type-card {
+    ion-card-content {
+      .effectiveness-section {
+        h4 {
+          color: var(--ion-color-light);
+        }
+      }
+    }
+  }
+} 

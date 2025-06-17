@@ -1,0 +1,210 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Busca Avançada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Busca Avançada</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Tipo de Busca -->
+  <div class="search-section">
+    <ion-segment [(ngModel)]="searchType" (ionChange)="clearFilters()">
+      <ion-segment-button value="name">
+        <ion-label>Nome</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="type">
+        <ion-label>Tipo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="ability">
+        <ion-label>Habilidade</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="advanced">
+        <ion-label>Avançada</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Busca por Nome -->
+  <div *ngIf="searchType === 'name'" class="search-container">
+    <ion-searchbar 
+      [(ngModel)]="searchQuery"
+      (ionInput)="performSearch()"
+      placeholder="Digite o nome do Pokémon..."
+      show-clear-button="focus">
+    </ion-searchbar>
+  </div>
+
+  <!-- Busca por Tipo -->
+  <div *ngIf="searchType === 'type'" class="type-search">
+    <div class="section-title">Selecione os tipos:</div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="3" *ngFor="let type of pokemonTypes">
+          <ion-item lines="none">
+                         <ion-checkbox 
+               [checked]="isTypeSelected(type)"
+               (ionChange)="onTypeToggle(type, $event)">
+             </ion-checkbox>
+            <ion-chip 
+              class="type-chip"
+              [style.background-color]="getTypeColor(type)">
+              {{ formatPokemonName(type) }}
+            </ion-chip>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="block" (click)="performSearch()" [disabled]="selectedTypes.length === 0">
+      Buscar por Tipos
+    </ion-button>
+  </div>
+
+  <!-- Busca por Habilidade -->
+  <div *ngIf="searchType === 'ability'" class="ability-search">
+    <ion-searchbar 
+      [(ngModel)]="searchQuery"
+      (ionInput)="performSearch()"
+      placeholder="Digite o nome da habilidade..."
+      show-clear-button="focus">
+    </ion-searchbar>
+  </div>
+
+  <!-- Busca Avançada -->
+  <div *ngIf="searchType === 'advanced'" class="advanced-search">
+    <ion-card>
+      <ion-card-content>
+        <div class="section-title">Filtros Avançados</div>
+        
+        <!-- Geração -->
+        <ion-item>
+          <ion-select [(ngModel)]="selectedGeneration" placeholder="Selecione a geração">
+            <ion-select-option *ngFor="let gen of generations" [value]="gen.value">
+              {{ gen.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Altura -->
+        <ion-item>
+          <ion-label>Altura: {{ minHeight }}m - {{ maxHeight }}m</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-range 
+            [(ngModel)]="minHeight" 
+            min="0" 
+            max="50" 
+            step="0.1"
+            color="primary">
+            <ion-label slot="start">0m</ion-label>
+            <ion-label slot="end">50m</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <!-- Peso -->
+        <ion-item>
+          <ion-label>Peso: {{ minWeight }}kg - {{ maxWeight }}kg</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-range 
+            [(ngModel)]="minWeight" 
+            min="0" 
+            max="1000" 
+            step="1"
+            color="secondary">
+            <ion-label slot="start">0kg</ion-label>
+            <ion-label slot="end">1000kg</ion-label>
+          </ion-range>
+        </ion-item>
+
+        <!-- Características especiais -->
+        <ion-item>
+          <ion-checkbox [(ngModel)]="isLegendary"></ion-checkbox>
+          <ion-label class="ion-margin-start">Apenas Lendários</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox [(ngModel)]="isMythical"></ion-checkbox>
+          <ion-label class="ion-margin-start">Apenas Míticos</ion-label>
+        </ion-item>
+
+        <ion-button expand="block" (click)="performSearch()" class="ion-margin-top">
+          <ion-icon name="search" slot="start"></ion-icon>
+          Buscar
+        </ion-button>
+
+        <ion-button expand="block" fill="outline" (click)="clearFilters()" class="ion-margin-top">
+          <ion-icon name="refresh" slot="start"></ion-icon>
+          Limpar Filtros
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="dots"></ion-spinner>
+    <p>Buscando Pokémon...</p>
+  </div>
+
+  <!-- Resultados da Busca -->
+  <div *ngIf="!loading && searchResults.length > 0" class="results-section">
+    <div class="section-title">Resultados encontrados: {{ searchResults.length }}</div>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let pokemon of searchResults">
+          <ion-card (click)="viewPokemon(pokemon)" class="pokemon-card">
+            <div class="pokemon-image-container">
+                             <img 
+                 [src]="pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default" 
+                 [alt]="pokemon.name"
+                 class="pokemon-image">
+              <ion-button 
+                (click)="toggleFavorite(pokemon, $event)"
+                fill="clear" 
+                class="favorite-button">
+                <ion-icon 
+                  name="heart"
+                  [color]="isFavorite(pokemon.id) ? 'danger' : 'medium'"
+                  [style.opacity]="isFavorite(pokemon.id) ? '1' : '0.3'">
+                </ion-icon>
+              </ion-button>
+            </div>
+            
+            <ion-card-content>
+              <div class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
+              <h3 class="pokemon-name">{{ formatPokemonName(pokemon.name) }}</h3>
+              
+              <div class="pokemon-types">
+                <ion-chip 
+                  *ngFor="let type of pokemon.types" 
+                  class="type-chip"
+                  [style.background-color]="getTypeColor(type.type.name)">
+                  {{ formatPokemonName(type.type.name) }}
+                </ion-chip>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Nenhum resultado -->
+  <div *ngIf="!loading && searchQuery && searchResults.length === 0" class="no-results">
+    <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
+    <p>Nenhum Pokémon encontrado</p>
+    <ion-button fill="outline" (click)="clearFilters()">
+      Limpar Busca
+    </ion-button>
+  </div>
+
+</ion-content> 

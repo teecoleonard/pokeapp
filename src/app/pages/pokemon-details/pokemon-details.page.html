@@ -1,0 +1,207 @@
+<ion-header [translucent]="true">
+  <ion-toolbar [style.--background]="pokemon ? getTypeColor(pokemon.types[0].type.name || 'normal') : '#68A090'">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="pokemon">
+      {{ formatPokemonName(pokemon.name) }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleFavorite()" fill="clear">
+        <ion-icon 
+          name="heart"
+          [color]="isFavorite() ? 'light' : 'light'"
+          [style.opacity]="isFavorite() ? '1' : '0.3'"
+          slot="icon-only">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="dots"></ion-spinner>
+    <p>Carregando detalhes...</p>
+  </div>
+
+  <!-- Pokemon Details -->
+  <div *ngIf="!loading && pokemon" class="pokemon-details">
+    
+    <!-- Header Section -->
+    <div class="pokemon-header" [style.background]="getTypeColor(pokemon.types[0].type.name || 'normal')">
+      <div class="pokemon-basic-info">
+        <div class="pokemon-id">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
+        <h1 class="pokemon-name">{{ formatPokemonName(pokemon.name) }}</h1>
+        <p class="pokemon-genus">{{ pokemonGenus }}</p>
+        
+        <div class="pokemon-types">
+          <ion-chip 
+            *ngFor="let type of pokemon.types" 
+            class="type-chip-large"
+            [style.background-color]="getTypeColor(type.type.name)">
+            {{ formatPokemonName(type.type.name) }}
+          </ion-chip>
+        </div>
+      </div>
+      
+      <div class="pokemon-image-hero">
+        <img 
+          [src]="pokemonImage" 
+          [alt]="pokemon.name"
+          class="hero-image"
+          (error)="$any($event.target).src='assets/icon/pokemon-placeholder.png'">
+      </div>
+    </div>
+
+    <!-- Description Section -->
+    <div class="description-section">
+      <p class="pokemon-description">{{ pokemonDescription }}</p>
+    </div>
+
+    <!-- Segments -->
+    <ion-segment 
+      [(ngModel)]="selectedSegment" 
+      (ionChange)="onSegmentChanged($event)"
+      class="segments">
+      <ion-segment-button value="overview">
+        <ion-label>Visão Geral</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="stats">
+        <ion-label>Estatísticas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="images">
+        <ion-label>Imagens</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Overview Tab -->
+    <div *ngIf="selectedSegment === 'overview'" class="tab-content">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngFor="let detail of mainDetails">
+            <ion-card class="detail-card">
+              <ion-card-content>
+                <div class="detail-item">
+                  <span class="detail-label">{{ detail.label }}</span>
+                  <span class="detail-value">{{ detail.value }}</span>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Abilities Section -->
+      <ion-card class="abilities-card">
+        <ion-card-header>
+          <ion-card-title>Habilidades</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="abilities-list">
+            <ion-chip 
+              *ngFor="let ability of abilityNames" 
+              class="ability-chip">
+              {{ ability }}
+            </ion-chip>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Stats Tab -->
+    <div *ngIf="selectedSegment === 'stats'" class="tab-content">
+      <ion-card class="stats-card">
+        <ion-card-header>
+          <ion-card-title>Estatísticas Base</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="stats-list">
+            <div *ngFor="let stat of pokemon.stats" class="stat-row">
+              <div class="stat-info">
+                <span class="stat-name">{{ formatPokemonName(stat.stat.name) }}</span>
+                <span class="stat-value">{{ stat.base_stat }}</span>
+              </div>
+              <div class="stat-bar-container">
+                <div 
+                  class="stat-bar"
+                  [style.width.%]="getStatPercentage(stat.base_stat)"
+                  [style.background-color]="getStatColor(stat.stat.name)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Images Tab -->
+    <div *ngIf="selectedSegment === 'images'" class="tab-content">
+      <ion-grid>
+        <ion-row>
+          <ion-col 
+            size="12" 
+            size-sm="6" 
+            size-md="4"
+            *ngFor="let image of alternativeImages">
+            <ion-card class="image-card">
+              <div class="image-container">
+                                                  <img 
+                   [src]="image.url" 
+                   [alt]="image.name"
+                   class="pokemon-variant-image"
+                   (error)="$any($event.target).src='assets/icon/pokemon-placeholder.png'">
+              </div>
+              <ion-card-content>
+                <ion-card-title class="image-title">{{ image.name }}</ion-card-title>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Official Artwork destaque -->
+      <ion-card class="artwork-card" *ngIf="pokemon.sprites?.other?.['official-artwork']?.front_default">
+        <ion-card-header>
+          <ion-card-title>Arte Oficial</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="artwork-container">
+            <img 
+              [src]="pokemon.sprites.other['official-artwork'].front_default" 
+              [alt]="pokemon.name + ' - Arte Oficial'"
+              class="official-artwork">
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && !pokemon" class="error-state">
+    <ion-icon name="warning" size="large" color="warning"></ion-icon>
+    <p>Erro ao carregar detalhes do Pokémon</p>
+    <div class="error-buttons">
+      <ion-button (click)="retryLoad()" fill="solid" color="primary">
+        <ion-icon name="refresh" slot="start"></ion-icon>
+        Tentar Novamente
+      </ion-button>
+      <ion-button (click)="goBack()" fill="outline" color="medium">
+        <ion-icon name="arrow-back" slot="start"></ion-icon>
+        Voltar
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Botão para voltar ao menu principal -->
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="goBack()" class="back-button-simple">
+      Voltar
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content> 

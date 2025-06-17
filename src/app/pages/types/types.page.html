@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Tipos de Pokémon</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tipos de Pokémon</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="types-container">
+    <div class="intro-section">
+      <p>Explore os diferentes tipos de Pokémon e suas características únicas!</p>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let type of pokemonTypes">
+          <ion-card (click)="selectType(type.name)" class="type-card" [style.--card-color]="getTypeColor(type.name)">
+            <div class="type-header" [style.background]="getTypeColor(type.name)">
+              <ion-icon [name]="type.icon" class="type-icon"></ion-icon>
+              <h2 class="type-name">{{ formatPokemonName(type.name) }}</h2>
+            </div>
+            
+            <ion-card-content>
+              <p class="type-description">{{ type.description }}</p>
+              
+              <!-- Forças -->
+              <div class="effectiveness-section" *ngIf="type.strengths.length > 0">
+                <h4>Forte contra:</h4>
+                <div class="type-chips">
+                  <ion-chip 
+                    *ngFor="let strength of type.strengths" 
+                    class="effectiveness-chip strong"
+                    [style.background-color]="getTypeColor(strength)">
+                    {{ formatPokemonName(strength) }}
+                  </ion-chip>
+                </div>
+              </div>
+              
+              <!-- Fraquezas -->
+              <div class="effectiveness-section" *ngIf="type.weaknesses.length > 0">
+                <h4>Fraco contra:</h4>
+                <div class="type-chips">
+                  <ion-chip 
+                    *ngFor="let weakness of type.weaknesses" 
+                    class="effectiveness-chip weak"
+                    [style.background-color]="getTypeColor(weakness)">
+                    {{ formatPokemonName(weakness) }}
+                  </ion-chip>
+                </div>
+              </div>
+              
+              <ion-button expand="block" fill="outline" (click)="selectType(type.name)" class="explore-button">
+                <ion-icon name="search" slot="start"></ion-icon>
+                Explorar {{ formatPokemonName(type.name) }}
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content> 

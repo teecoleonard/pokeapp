@@ -1,0 +1,170 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Estatísticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Estatísticas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="stats-container">
+    <!-- Segmentos -->
+    <ion-segment [(ngModel)]="selectedView" (ionChange)="onSegmentChanged($event)" class="stats-segment">
+      <ion-segment-button value="overview">
+        <ion-label>Visão Geral</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="types">
+        <ion-label>Por Tipo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="generations">
+        <ion-label>Gerações</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="records">
+        <ion-label>Recordes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Visão Geral -->
+    <div *ngIf="selectedView === 'overview'" class="stats-section">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-icon name="library" color="primary"></ion-icon>
+                  Estatísticas Gerais
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="stat-item">
+                  <span class="stat-label">Total de Pokémon:</span>
+                  <span class="stat-value">{{ generalStats.totalPokemon }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Tipos disponíveis:</span>
+                  <span class="stat-value">{{ generalStats.totalTypes }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Gerações:</span>
+                  <span class="stat-value">{{ generalStats.totalGenerations }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Seus favoritos:</span>
+                  <span class="stat-value highlight">{{ generalStats.favoritesCount }}</span>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          
+          <ion-col size="12" size-md="6">
+            <ion-card class="stat-card">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-icon name="resize" color="secondary"></ion-icon>
+                  Médias Físicas
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="stat-item">
+                  <span class="stat-label">Altura média:</span>
+                  <span class="stat-value">{{ generalStats.averageHeight }}m</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Peso médio:</span>
+                  <span class="stat-value">{{ generalStats.averageWeight }}kg</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Mais alto:</span>
+                  <span class="stat-value">Eternatus (20m)</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Mais pesado:</span>
+                  <span class="stat-value">Celesteela (999.9kg)</span>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Estatísticas por Tipo -->
+    <div *ngIf="selectedView === 'types'" class="stats-section">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="apps" color="primary"></ion-icon>
+            Distribuição por Tipo
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngFor="let type of typeStats" class="type-stat-item">
+            <div class="type-info">
+              <ion-chip [style.background-color]="getTypeColor(type.name)" class="type-chip">
+                {{ formatPokemonName(type.name) }}
+              </ion-chip>
+              <span class="type-count">{{ type.count }} Pokémon ({{ type.percentage }}%)</span>
+            </div>
+            <ion-progress-bar [value]="type.percentage / 100" color="primary"></ion-progress-bar>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Estatísticas por Geração -->
+    <div *ngIf="selectedView === 'generations'" class="stats-section">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" size-lg="4" *ngFor="let gen of generationStats">
+            <ion-card class="generation-card">
+              <ion-card-header>
+                <ion-card-title>
+                  Geração {{ gen.number }}
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="generation-info">
+                  <h3>{{ gen.name }}</h3>
+                  <p class="generation-year">{{ gen.years }}</p>
+                  <div class="generation-count">
+                    <span class="count-number">{{ gen.count }}</span>
+                    <span class="count-label">Pokémon</span>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Recordes -->
+    <div *ngIf="selectedView === 'records'" class="stats-section">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="trophy" color="warning"></ion-icon>
+            Pokémon Recordistas
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngFor="let record of strongestPokemon" class="record-item">
+            <div class="record-info">
+              <div class="record-name">{{ record.name }}</div>
+              <div class="record-category">{{ record.stat }}</div>
+            </div>
+            <div class="record-value">{{ record.value }}</div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content> 
