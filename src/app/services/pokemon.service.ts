@@ -32,31 +32,23 @@ export class PokemonService {
 
   // Buscar detalhes de um Pokémon específico
   getPokemonDetails(nameOrId: string | number): Observable<Pokemon> {
-    console.log(`Fazendo requisição para: ${this.apiUrl}/pokemon/${nameOrId}`);
     return this.http.get<Pokemon>(`${this.apiUrl}/pokemon/${nameOrId}`);
   }
 
   // Buscar espécies do Pokémon (para descrição)
   getPokemonSpecies(id: number): Observable<PokemonSpecies> {
-    console.log(`Fazendo requisição para: ${this.apiUrl}/pokemon-species/${id}`);
     return this.http.get<PokemonSpecies>(`${this.apiUrl}/pokemon-species/${id}`);
   }
 
   // Buscar Pokémon com seus detalhes completos
   getPokemonWithDetails(nameOrId: string | number): Observable<{ pokemon: Pokemon; species: PokemonSpecies }> {
-    console.log('Iniciando busca de detalhes para:', nameOrId);
-    
     return this.getPokemonDetails(nameOrId).pipe(
       switchMap(pokemon => {
-        console.log('Pokemon básico carregado:', pokemon.name);
         return this.getPokemonSpecies(pokemon.id).pipe(
-          map(species => {
-            console.log('Species carregada:', species);
-            return {
-              pokemon: pokemon,
-              species: species
-            };
-          })
+          map(species => ({
+            pokemon: pokemon,
+            species: species
+          }))
         );
       })
     );
@@ -93,10 +85,7 @@ export class PokemonService {
       this.favoritesSubject.next(updatedFavorites);
       this.saveFavoritesToStorage(updatedFavorites);
       
-      // Enviar evento de webhook
       this.webhookService.trackPokemonFavorited(pokemon.id, pokemon.name, 'added');
-      
-      console.log(`${pokemon.name} adicionado aos favoritos!`);
     }
   }
 
@@ -108,9 +97,7 @@ export class PokemonService {
     this.saveFavoritesToStorage(updatedFavorites);
     
     if (pokemonToRemove) {
-      // Enviar evento de webhook
       this.webhookService.trackPokemonFavorited(pokemonToRemove.id, pokemonToRemove.name, 'removed');
-      console.log(`${pokemonToRemove.name} removido dos favoritos!`);
     }
   }
 
@@ -147,7 +134,13 @@ export class PokemonService {
   }
 
   formatPokemonName(name: string): string {
-    return name.charAt(0).toUpperCase() + name.slice(1);
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+
+  getPokemonImage(pokemon: Pokemon): string {
+    return pokemon.sprites?.other?.['official-artwork']?.front_default || 
+           pokemon.sprites?.front_default || 
+           'assets/icon/pokemon-placeholder.png';
   }
 
   getTypeColor(type: string): string {

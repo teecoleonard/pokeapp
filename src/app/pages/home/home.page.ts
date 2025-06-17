@@ -4,7 +4,6 @@ import { LoadingController, ToastController, InfiniteScrollCustomEvent } from '@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon } from '../../models/pokemon.interface';
@@ -16,7 +15,7 @@ import { WebHookService } from '../../services/webhook.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, HttpClientModule]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class HomePage implements OnInit, OnDestroy {
   pokemons: Pokemon[] = [];
@@ -176,9 +175,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   getPokemonImage(pokemon: Pokemon): string {
-    return pokemon.sprites?.other?.['official-artwork']?.front_default || 
-           pokemon.sprites?.front_default || 
-           'assets/icon/pokemon-placeholder.png';
+    return this.pokemonService.getPokemonImage(pokemon);
   }
 
   formatPokemonName(name: string): string {

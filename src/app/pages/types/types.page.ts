@@ -167,7 +167,14 @@ export class TypesPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Inicialização dos tipos Pokémon
+    this.loadPokemonTypes();
+  }
+
+  private loadPokemonTypes() {
+    // Lógica para carregar tipos se necessário
+  }
 
   selectType(typeName: string) {
     this.router.navigate(['/tabs/search'], { 

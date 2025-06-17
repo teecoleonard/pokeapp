@@ -143,7 +143,7 @@ export class AboutPage implements OnInit {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      console.log('Link copiado para a área de transferência');
+  
     });
   }
 

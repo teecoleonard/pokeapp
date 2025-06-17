@@ -4,7 +4,6 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon, PokemonSpecies } from '../../models/pokemon.interface';
@@ -15,7 +14,7 @@ import { PokemonService } from '../../services/pokemon.service';
   templateUrl: './pokemon-details.page.html',
   styleUrls: ['./pokemon-details.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, HttpClientModule]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class PokemonDetailsPage implements OnInit, OnDestroy {
   pokemon: Pokemon | null = null;
@@ -55,8 +54,6 @@ export class PokemonDetailsPage implements OnInit, OnDestroy {
   }
 
   async loadPokemonDetails(pokemonId: string) {
-    console.log('Carregando detalhes do Pokémon ID:', pokemonId);
-    
     const loading = await this.loadingController.create({
       message: 'Carregando detalhes...',
     });
@@ -66,7 +63,6 @@ export class PokemonDetailsPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log('Dados recebidos:', data);
           this.pokemon = data.pokemon;
           this.species = data.species;
           this.calculateDerivedData();
@@ -83,7 +79,6 @@ export class PokemonDetailsPage implements OnInit, OnDestroy {
             color: 'danger'
           });
           toast.present();
-          // Não redirecionar automaticamente, deixar o usuário tentar novamente
         }
       });
   }

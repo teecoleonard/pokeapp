@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import { catchError, retry, timeout } from 'rxjs/operators';
@@ -39,7 +39,7 @@ export interface WebHookResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class WebHookService {
+export class WebHookService implements OnDestroy {
   private events$ = new Subject<WebHookEvent>();
   private responses$ = new Subject<WebHookResponse>();
   private endpoints: WebHookEndpoint[] = [];
@@ -242,7 +242,7 @@ export class WebHookService {
     })
     .pipe(
       timeout(endpoint.timeout_ms),
-      retry(0), // Não retry automático, controlamos manualmente
+      retry(0),
       catchError(error => {
         console.error(`🔗 Erro ao enviar para ${endpoint.name}:`, error);
         return of({ status: error.status || 500, statusText: error.message });
@@ -294,22 +294,21 @@ export class WebHookService {
    * Adicionar evento à fila de retry
    */
   private queueEventForRetry(event: WebHookEvent, endpoint: WebHookEndpoint, nextAttempt: number): void {
-    const delay = Math.pow(2, nextAttempt) * 1000; // Exponential backoff
+    const delay = Math.pow(2, nextAttempt) * 1000;
     setTimeout(() => {
       this.sendToEndpoint(event, endpoint, nextAttempt);
     }, delay);
   }
 
   /**
-   * Configuração inicial
+   * Configuração inicial dos endpoints
    */
   private loadConfiguration(): void {
-    // Endpoints de exemplo - em produção viriam de um servidor de configuração
     const defaultEndpoints: WebHookEndpoint[] = [
       {
         id: 'analytics_endpoint',
         name: 'Analytics Tracker',
-        url: 'https://webhook.site/unique-id-analytics', // Substitua por endpoint real
+        url: 'https://webhook.site/unique-id-analytics',
         events: ['pokemon_viewed', 'pokemon_favorited', 'pokemon_searched', 'page_visited'],
         enabled: true,
         retry_attempts: 3,
@@ -322,7 +321,7 @@ export class WebHookService {
       {
         id: 'error_tracking',
         name: 'Error Tracker',
-        url: 'https://webhook.site/unique-id-errors', // Substitua por endpoint real
+        url: 'https://webhook.site/unique-id-errors',
         events: ['app_error'],
         enabled: true,
         retry_attempts: 5,
@@ -334,15 +333,14 @@ export class WebHookService {
       {
         id: 'user_behavior',
         name: 'User Behavior Analytics',
-        url: 'https://webhook.site/unique-id-behavior', // Substitua por endpoint real
-        events: ['*'], // Todos os eventos
-        enabled: false, // Desabilitado por default
+        url: 'https://webhook.site/unique-id-behavior',
+        events: ['*'],
+        enabled: false,
         retry_attempts: 2,
         timeout_ms: 4000
       }
     ];
 
-    // Carregar configuração do localStorage (se existir)
     const savedConfig = localStorage.getItem('webhook_config');
     if (savedConfig) {
       try {
@@ -384,7 +382,6 @@ export class WebHookService {
    * Processador da fila de retry
    */
   private startQueueProcessor(): void {
-    // Processa a fila a cada 30 segundos
     this.queueProcessor = setInterval(() => {
       if (this.eventQueue.length > 0) {
         console.log(`🔗 Processando fila de retry: ${this.eventQueue.length} eventos`);
@@ -404,7 +401,6 @@ export class WebHookService {
   }
 
   private generateSignature(event: WebHookEvent): string {
-    // Em produção, use uma chave secreta real e HMAC-SHA256
     return btoa(JSON.stringify(event)).substr(0, 32);
   }
 

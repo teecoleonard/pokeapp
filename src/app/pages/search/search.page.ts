@@ -4,7 +4,6 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { HttpClientModule } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Pokemon } from '../../models/pokemon.interface';
 import { PokemonService } from '../../services/pokemon.service';
@@ -14,7 +13,7 @@ import { PokemonService } from '../../services/pokemon.service';
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, HttpClientModule]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class SearchPage implements OnInit {
   searchQuery = '';
@@ -53,10 +52,14 @@ export class SearchPage implements OnInit {
 
   constructor(
     private pokemonService: PokemonService,
-    private router: Router
+    private router: Router,
+    private loadingController: LoadingController,
+    private toastController: ToastController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.searchResults = [];
+  }
 
   async performSearch() {
     if (!this.searchQuery.trim() && this.searchType === 'name') return;
@@ -102,17 +105,14 @@ export class SearchPage implements OnInit {
 
   private async searchByType() {
     // Implementar busca por tipo usando a API
-    console.log('Busca por tipo não implementada ainda');
   }
 
   private async searchByAbility() {
     // Implementar busca por habilidade usando a API
-    console.log('Busca por habilidade não implementada ainda');
   }
 
   private async advancedSearch() {
     // Implementar busca avançada com filtros
-    console.log('Busca avançada não implementada ainda');
   }
 
   onTypeToggle(type: string, event: any) {

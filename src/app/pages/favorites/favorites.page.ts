@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon } from '../../models/pokemon.interface';
@@ -16,7 +15,7 @@ import { PokemonService } from '../../services/pokemon.service';
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule, HttpClientModule]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule]
 })
 export class FavoritesPage implements OnInit, OnDestroy {
   favorites: Pokemon[] = [];
@@ -128,14 +127,11 @@ export class FavoritesPage implements OnInit, OnDestroy {
       this.favorites.forEach(pokemon => {
         this.pokemonService.removeFromFavorites(pokemon.id);
       });
-      console.log('Todos os favoritos foram removidos');
     }
   }
 
   getPokemonImage(pokemon: Pokemon): string {
-    return pokemon.sprites?.other?.['official-artwork']?.front_default || 
-           pokemon.sprites?.front_default || 
-           'assets/icon/pokemon-placeholder.png';
+    return this.pokemonService.getPokemonImage(pokemon);
   }
 
   formatPokemonName(name: string): string {
@@ -164,7 +160,5 @@ export class FavoritesPage implements OnInit, OnDestroy {
     link.download = 'meus-pokemon-favoritos.json';
     link.click();
     window.URL.revokeObjectURL(url);
-
-    console.log('Lista de favoritos exportada!');
   }
 } 
